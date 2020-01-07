@@ -66,3 +66,34 @@
     `for (( ; ; )) do curl 192.168.39.169:32761/foo?foo=bar; echo ''; sleep 1; done;`
 
   - [ ] Run a db to test
+
+     use redis to count the view count
+
+     create the redis pod.yml
+    ```yml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: redis
+      labels:
+        name: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine3.11
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 6379
+
+    ```
+     expose the port
+
+     `$ kubectl expose pod redis --type=NodePort --name redis-port`
+
+     `$ docker run -it redis:alpine3.11 /bin/sh`
+
+     `$ redis-cli -h 192.168.39.169 -p 31311`
+

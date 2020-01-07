@@ -1,6 +1,11 @@
 all: build push clean
 
-TAG = 1.2
+TAG=
+ifdef tag
+	TAG=$(tag)
+else
+	TAG=latest
+endif
 
 build: 
 	CGO_ENABLED=0 GOOS=linux go build -o main main.go
